@@ -1,0 +1,10 @@
+bak.doc
+build.bat
+clean build.bat
+forma_*
+gostr*
+main.aux
+main.log
+main.toc
+sources.txt
+temy*
