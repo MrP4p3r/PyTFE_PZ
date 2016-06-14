@@ -1,0 +1,323 @@
+% -- LuaLaTeX --
+
+\RequirePackage{calc}
+
+% -- VARS --
+
+%\faculty
+%\department
+%\speciality
+%\zavkafname
+%\zavkafrank
+%\docsubject
+%\studclass
+%\studname
+%\rukovname
+%\rukovrank
+
+\newcommand{\faculty}[1]{\gdef\@faculty{#1}}
+\newcommand{\department}[1]{\gdef\@department{#1}}
+\newcommand{\speciality}[1]{\gdef\@speciality{#1}}
+\newcommand{\zavkafname}[1]{\gdef\@zavkafname{#1}}
+\newcommand{\zavkafrank}[1]{\gdef\@zavkafrank{#1}}
+\newcommand{\docsubject}[1]{\gdef\@docsubject{#1}}
+\newcommand{\studclass}[1]{\gdef\@studclass{#1}}
+\newcommand{\studname}[1]{\gdef\@studname{#1}}
+\newcommand{\rukovname}[1]{\gdef\@rukovname{#1}}
+\newcommand{\rukovrank}[1]{\gdef\@rukovrank{#1}}
+\newcommand{\docfooter}[1]{\gdef\@docfooter{#1}}
+
+\newcommand{\gender}[1]{\gdef\@gender{#1}}
+
+\faculty{\char`\\faculty}
+\department{\char`\\department}
+\speciality{\char`\\speciality}
+\zavkafname{\mbox{}}
+\zavkafrank{\mbox{}}
+\docsubject{\char`\\docsubject}
+\studclass{\char`\\studclass}
+\studname{\char`\\studname}
+\rukovname{\mbox{}}
+\rukovrank{\mbox{}}
+\docfooter{\the\year}
+
+\gender{m} % m/f
+
+%--------------------- TITLE PAGE ------------------------
+
+\newlength{\q@block@width}
+\newlength{\q@block@top}
+\newlength{\q@block@left}
+
+\newlength{\q@ul@rw}
+\newlength{\q@ul@th}
+\newlength{\q@ul@bh}
+\newlength{\q@ul@thi}
+\newlength{\q@ul@bs}
+
+%\setlength{\q@ul@rw}{0.925\textwidth}
+\setlength{\q@ul@th}{-5.1mm}
+\setlength{\q@ul@bh}{-1.5mm}
+\setlength{\q@ul@thi}{0.5pt}
+\setlength{\q@ul@bs}{-1.2mm}
+
+\newcommand{\q@ul}[2]{%
+  \setlength{\q@ul@rw}{\textwidth}
+  \noindent\centering
+  \ifseq{#1}{}{\phantom{DA}}{#1} \\
+  \vspace{\q@ul@th}\rule{\q@ul@rw}{\q@ul@thi}
+  \ifseq{#2}{}{}{\\\vspace{\q@ul@bh} \footnotesize #2}
+}
+
+\newenvironment{q@block}[2]
+{
+  \setlength{\q@block@width}{#1}
+  \setlength{\q@block@top}{\Gm@tmargin+#2}
+  \setlength{\q@block@left}{\Gm@lmargin+(\Gm@width-\q@block@width)/2}
+  \begin{textblock*}{\q@block@width}(\q@block@left,\q@block@top)
+}{
+  \end{textblock*}
+}
+
+\newcommand{\makeqdiptitle}{%
+  \begin{titlepage}
+    \mbox{}
+
+    \begin{q@block}{150mm}{0mm}
+      \centering\footnotesize\noindent
+      МИНИСТЕРСТВО ОБРАЗОВАНИЯ И НАУКИ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+      федеральное государственное автономное образовательное учреждение высшего образования\\
+      <<САНКТ-ПЕТЕРБУРГСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ\\
+      АЭРОКОСМИЧЕСКОГО ПРИБОРОСТРОЕНИЯ>>
+    \end{q@block}
+
+    % \begin{q@block}{\linewidth}{35mm}
+    %   \noindent
+    %   \@faculty \\
+    %   Специальность (направление) \makebox[0mm][l]{\@speciality{}} \hspace{25mm}
+    %   Кафедра \makebox[0mm][l]{\@department{}}
+    % \end{q@block}
+
+    \begin{q@block}{\linewidth}{35mm}
+      \noindent
+      ДОПУСТИТЬ К ЗАЩИТЕ\\
+      Заведущий кафедрой \textnumero \rule{8mm}{\q@ul@thi}\\
+      \noindent
+      \begin{minipage}[t]{\linewidth}
+        \noindent
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@zavkafrank}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@zavkafname}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{70mm}
+      \centering\noindent
+      БАКАЛАВРСКАЯ РАБОТА\\[5mm]
+      на тему\enspace\hrulefill\\
+      \hrulefill\\
+      \hrulefill\\[5mm]
+      \noindent
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.12\linewidth}
+          выполнена
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.85\linewidth}
+          \q@ul{}{фамилия, имя, отчество студента в творительном падеже}
+        \end{minipage}
+      \end{minipage}\vspace{5mm}
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.31\linewidth}
+          по направлению подготовки
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.19\linewidth}
+          \q@ul{.03.}{код}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.4\linewidth}
+          \q@ul{}{наименование направления}
+        \end{minipage}
+      \end{minipage}
+      \begin{minipage}[t]{\linewidth}
+        \q@ul{}{наименование направления}
+      \end{minipage}\vspace{5mm}
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.31\linewidth}
+          направленности
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.19\linewidth}
+          \q@ul{}{код}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.4\linewidth}
+          \q@ul{}{наименование направленности}
+        \end{minipage}
+      \end{minipage}
+      \begin{minipage}[t]{\linewidth}
+        \q@ul{}{наименование направленности}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{175mm}
+      \noindent
+      \begin{minipage}{\linewidth}
+        \begin{minipage}[t]{0.21\linewidth}
+          Студент группы \textnumero
+        \end{minipage}
+        \begin{minipage}[t]{0.1\linewidth}
+          \q@ul{}{}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.2\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.4\linewidth}
+          \q@ul{}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}\vspace{2.5mm}
+      Руководитель\\[2.5mm]
+      \begin{minipage}{\linewidth}
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.2\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.4\linewidth}
+          \q@ul{}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{220mm}
+      В работе не содержится информация с ограниченным доступом и
+      отсутствует сведения, представляющие коммерческую ценность.\\[2.5mm]
+
+      \hfill
+      \begin{minipage}{0.5\linewidth}
+        \begin{minipage}{0.48\linewidth}
+          \q@ul{}{подпись руководителя}
+        \end{minipage}\hfill
+        \begin{minipage}{0.48\linewidth}
+          \q@ul{}{подпись студента}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+  \end{titlepage}
+}
+
+\newcommand{\qdipzad}{
+  \newpage
+  \thispagestyle{empty}
+  \mbox{}
+
+  \begin{q@block}{150mm}{0mm}
+    \centering\footnotesize\noindent
+    МИНИСТЕРСТВО ОБРАЗОВАНИЯ И НАУКИ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+    федеральное государственное автономное образовательное учреждение высшего образования\\
+    <<САНКТ-ПЕТЕРБУРГСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ\\
+    АЭРОКОСМИЧЕСКОГО ПРИБОРОСТРОЕНИЯ>>
+  \end{q@block}
+
+  \begin{q@block}{\linewidth}{35mm}
+    \noindent
+    УТВЕРЖДАЮ\\
+    Заведущий кафедрой \textnumero \rule{8mm}{\q@ul@thi}\\
+    \noindent
+    \begin{minipage}[t]{\linewidth}
+      \noindent
+      \begin{minipage}[t]{0.31\linewidth}
+        \q@ul{\@zavkafrank}{должность, уч. степень, звание}
+      \end{minipage}\hfill
+      \begin{minipage}[t]{0.31\linewidth}
+        \q@ul{}{подпись, дата}
+      \end{minipage}\hfill
+      \begin{minipage}[t]{0.31\linewidth}
+        \q@ul{\@zavkafname}{инициалы, фамилия}
+      \end{minipage}
+    \end{minipage}
+  \end{q@block}
+
+  \begin{q@block}{\linewidth}{70mm}
+    \centering\noindent
+    ЗАДАНИЕ НА ВЫПОЛНЕНИЕ БАКАЛАВРСКОЙ РАБОТЫ\\[5mm]
+    \begin{minipage}[t]{\linewidth}
+      \begin{minipage}[t]{0.22\linewidth}
+        студенту группы \textnumero
+      \end{minipage}
+      \begin{minipage}[t]{0.12\linewidth}
+        \q@ul{}{}
+      \end{minipage}\hfill
+      \begin{minipage}[t]{0.62\linewidth}
+        \q@ul{}{фамилия, имя, отчество}
+      \end{minipage}
+    \end{minipage}\\[5mm]
+    на тему\enspace\hrulefill\\
+    \hrulefill\\
+    \hrulefill\\[5mm]
+    \noindent
+    утвержденную приказом ГУАП от\enspace\hrulefill\enspace\textnumero\enspace\hrulefill\\[5mm]
+    Цель работы:\enspace\hrulefill\\
+    \hrulefill\\
+    \hrulefill\\[5mm]
+    \noindent
+    Задачи, подлежащие решению:\enspace\hrulefill\\
+    \hrulefill\\
+    \hrulefill\\[5mm]
+    \noindent
+    Содержание работы (основные разделы):\enspace\hrulefill\\
+    \hrulefill\\
+    \hrulefill\\[5mm]
+    \noindent
+    \begin{minipage}[t]{\linewidth}
+      \noindent
+      \begin{minipage}[t]{0.6\linewidth}
+        \noindent
+        Срок сдачи работы << \makebox[10mm][l]{\hrulefill} >> \hrulefill\enspace 2016
+      \end{minipage}
+    \end{minipage}\\[5mm]
+
+    \noindent
+    \begin{minipage}[t]{\linewidth}
+      Руководитель
+
+      \noindent
+      \begin{minipage}[t]{\linewidth}
+        \noindent
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@zavkafrank}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@zavkafname}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{minipage}\\[5mm]
+
+    \noindent
+    \begin{minipage}[t]{\linewidth}
+      Задание принял к исполнению\vspace{2.5mm}
+
+      \noindent
+      \begin{minipage}{\linewidth}
+        \begin{minipage}[t]{0.21\linewidth}
+          Студент группы \textnumero
+        \end{minipage}
+        \begin{minipage}[t]{0.1\linewidth}
+          \q@ul{}{}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.2\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.4\linewidth}
+          \q@ul{}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}\vspace{2.5mm}
+    \end{minipage}
+  \end{q@block}
+}

@@ -1,0 +1,162 @@
+% -- LuaLaTeX --
+
+% -- базовые пекеджи --
+
+\usepackage[top=20mm,bottom=20mm,left=25mm,right=10mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{etoolbox}
+\usepackage{twoopt} % \newcommandtwoopt{\xyz}[3][Def1][Def2]{Something with #1, #2 and #3}
+\usepackage{xparse} % \DeclareDocumentCommand{\foocmd}{ O{default1} O{default2} m }{#1~#2~#3}
+\usepackage{lipsum}
+\usepackage{calc}
+\usepackage{chngcntr}
+
+% -- пекеджи для форматирования --
+
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{placeins}
+\usepackage[absolute]{textpos}
+\usepackage{tocloft}
+\usepackage{indentfirst}
+
+% -- environment пекеджи --
+
+% - common -
+
+\usepackage{tocloft}
+%\usepackage[labelsep=endash]{caption}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage{transparent}
+\usepackage{lscape}
+
+% - text -
+
+\usepackage{lscape}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage[inline]{enumitem}
+
+% - math -
+
+\usepackage{amsmath}
+\usepackage{array}
+
+% - tables -
+
+\usepackage{blkarray}
+\usepackage{tabularx}
+
+% - graphics -
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgffor}
+
+
+% -- собственные пекеджи --
+
+\usepackage{./tex/repeat}
+\usepackage{./tex/kvmacros} % карта карно
+\usepackage{./tex/millim}
+
+\newcommand{\ifseq}[4]{\expandafter\ifstrequal\expandafter{#1}{#2}{#3}{#4}}
+
+% -- настройки документа --
+
+% - мелочи -
+
+%\captionsetup{figurename=Рисунок}
+%\setlength{\abovecaptionskip}{-10pt}
+
+% - шрифты -
+
+\setmainfont{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+
+
+% - настройка списков -
+
+\renewcommand{\theenumii}{\arabic{enumii}}
+\AddEnumerateCounter{\asbuk}{\russian@alph}{}
+\setlist[enumerate]{itemsep=0mm,leftmargin=\parindent,topsep=2.5mm}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\asbuk*),topsep=0mm}
+\setlist[itemize]{itemsep=0mm,leftmargin=\parindent,topsep=2.5mm,label={--}}
+
+% - типы столбцов в таблицах -
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcommand{\myverb}[1]{\ttfamily\detokenize{#1}}
+\newcolumntype{V}[1]{>{\collectcell\myverb}m{#1}<{\endcollectcell}}
+\newcolumntype{H}{@{}m{0pt}@{}}
+
+% - настройка надписей -
+
+%\DeclareCaptionFormat{qformat}{#1 -- #3}
+\captionsetup{
+  figurename=Рисунок,
+  tablename=Таблица,
+  font=normalfont,
+  hypcap=false,
+  format=plain,
+  tableposition=top,
+  labelsep=endash
+}
+\captionsetup*[figure]{width=0.8\columnwidth}
+\captionsetup*[table]{singlelinecheck=false,justification=raggedright}
+\renewcommand{\arraystretch}{1.2}
+
+% - стили заголовков -
+
+\setlength{\parindent}{12.5mm} % отступ абзаца
+%\titleformat{\section}[block]{\hspace{\parindent}\Large}{\thesection}{1em}{}
+\titleformat{\section}[block]{\centering\Large}{\thesection}{1em}{}
+\titleformat{\subsection}[block]{\hspace{\parindent}\large}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{\hspace{\parindent}\normalfont}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{15pt plus 2pt minus 2pt}{15pt plus 2pt minus 2pt}
+\titlespacing*{\subsection}{0pt}{5pt plus 2pt minus 2pt}{5pt plus 2pt minus 2pt}
+\titlespacing*{\subsubsection}{0pt}{5pt plus 2pt minus 2pt}{5pt plus 2pt minus 2pt}
+
+% - стиль TOC -
+
+\renewcommand{\cfttoctitlefont}{\Large}
+%\renewcommand{\cftaftertoctitle}{\hfill}
+%\setlength{\cftbeforetoctitleskip}{30pt}
+%\setlength{\cftaftertoctitleskip}{20pt}
+\renewcommand\cftsecfont{\large}
+\renewcommand\cftsecpagefont{\large}
+%\renewcommand\cftsecafterpnum{\par\addvspace{4pt}}
+\renewcommand{\cftsecleader}{\cftdotfill{5}}
+
+% -- мои макросы --
+
+% Добавляет секцию без номера
+\newcommand{\ssection}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+
+% изи код
+\newcommand{\easycode}[1]{{\singlespacing\small\verbatiminput{#1}}}
+
+% tree item
+\newcommand{\qtreelist}{\tikz[overlay]\draw(-.2,-.2)--(-.2,.5) [path fading=east](-.2,.15)--(.1,.15);}
+\newcommand{\qtreeitem}{\item[\qtreelist]}
+
+% ref
+\undef\eqref
+\newcommand{\eqref}[1]{(\ref{#1})}
+
+% -- environments --
+
+
+% -- tikz --
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows, decorations.markings}
+\usetikzlibrary{shadows}
+\tikzset{>={Latex[length=3mm, width=1.2mm]}}

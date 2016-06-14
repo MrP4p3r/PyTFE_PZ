@@ -1,0 +1,75 @@
+\documentclass[12pt,a4paper]{article}
+% -- LuaLaTeX --
+% !TEX root = ./main.tex
+% !TEX program = lualatex
+
+\usepackage{./tex/qdipsettings}
+\usepackage{everypage}
+
+\newcommand{\dadada}{%
+  \begin{textblock*}{\textwidth}(30mm,20mm)
+    \color{red}\transparent{0.2}
+    \scalebox{7}{\rotatebox{60}{\framebox{НЕ ОПЛАЧЕНО}}}
+  \end{textblock*}
+}
+
+%\AddEverypageHook{\dadada}
+
+% настройки титульной страницы
+
+\faculty{Институт \textnumero 4 -- Институт вычислительных систем и программирования}
+\speciality{09.03.01}
+\department{44}
+
+\studclass{4241}
+\studname{Гетманенко Г.В.}
+
+\docfooter{Санкт-Петербург, 2016}
+
+\docsubject{\uppercase{\large Текстовый редактор с шифрованием}}
+
+%\nofiles
+
+%\directlua{ require("drawboxes")}\usepackage{atbegshi}\AtBeginShipout {\directlua{drawboxes.visual_debug()}}
+
+% нумерация рисунков по секциям
+\counterwithin{figure}{section}
+
+% ---------- НАЧАЛО ДОКУМЕНТА ----------
+
+\begin{document}
+
+% Титульник
+\makeqdiptitle %
+\qdipzad %
+\newpage
+
+\setcounter{page}{3}
+
+% Содержание
+\renewcommand{\contentsname}{{\centering\Large Содержание\par}}
+\tableofcontents
+% \addtocontents{toc}{\protect\thispagestyle{empty}} % убирает нумерацию в содержании
+\newpage
+
+% Сокращения
+\input{./cont/sokrashenia.tex}
+
+% Введение
+\input{./cont/vvedenie.tex}
+
+% Основные разделы
+\input{./cont/razd1.tex}
+\input{./cont/razd2.tex}
+\input{./cont/razd3.tex}
+
+% Заключение
+\input{./cont/zakluchenie.tex}
+
+% Источники
+\input{./cont/istochniki.tex}
+
+% Приложения
+\input{./cont/prilozh.tex}
+
+\end{document}

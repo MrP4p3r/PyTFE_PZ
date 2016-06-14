@@ -1,0 +1,36 @@
+└── src
+    ├── algs
+    │   ├── blowfish
+    │   │   ├── blowfish.asm        Реализация Blowfish на языке ассемблера
+    │   │   ├── blowfishPS.asm      Начальные значения таблиц
+    │   │   ├── blowfish.c          Реализация Blowfish на C
+    │   │   └── blowfishPS.c        Начальные значения таблиц
+    │   └── feal4
+    │       ├── feal4.asm           Реализация FEAL-4 на языке ассемблера
+    │       └── feal4.c             Реализация FEAL-4 на C
+    └── app
+        ├── mlibs
+        │   ├── __init__.py         *
+        │   ├── blowfish.py         Связка библиотеки Blowfish c Python
+        │   ├── commonfunctions.py  Общие функции
+        │   ├── defaultvalues.py    Константы
+        │   ├── feal4.py            Связка библиотеки FEAL-4 с Python
+        │   ├── interte.py          Описание интерфейса текстового редактора
+        │   ├── mwidgetste.py       Описание дополнительных элентов интерфейса
+        │   ├── pbkdf2.py           Реализация алгоритма PBKDF2
+        │   ├── tfe.py              Модуль для шифрования/дешифрования
+        │   └── win32
+        │       ├── blowfish.dll    *
+        │       └── feal4.dll       *
+        ├── pytfe.pro               *
+        ├── pytfete.py              Главный исполняемый файл программы
+        ├── setup.py                Скрипт для сборки проекта
+        └── tr
+            ├── com.ts              Общая таблица переводов
+            ├── qt_ru.ts            Русский переводов строк Qt5
+            ├── tr_en.ts            Английский перевод
+            ├── tr_ru.ts            Русский перевод
+            ├── com.qm              *
+            ├── qt_ru.qm            *
+            ├── tr_en.qm            *
+            └── tr_ru.qm            *

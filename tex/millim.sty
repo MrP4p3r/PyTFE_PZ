@@ -1,0 +1,24 @@
+\RequirePackage{tikz}
+
+\definecolor{milcol}{rgb}{0.647,0.804,0.894}
+%\definecolor{milcol}{rgb}{0.349,0.6353,0.8}
+\tikzstyle{bordlin}  = [line width=0.3mm,line cap=rect,color=milcol]
+\tikzstyle{canline}  = [line width=0.15mm,color=milcol]
+\tikzstyle{hcanline} = [line width=0.08mm,color=milcol]
+\tikzstyle{milline}  = [line width=0.025mm,color=milcol]
+
+
+\newcommand{\millim}[2]{%
+	\begin{tikzpicture}%
+		%\foreach \x in {-2,-1,0,1,2,3,4,5,6,7}
+		%\node[anchor=north] at (\x,-2) {\x};
+		\draw[bordlin] (0 mm,0 mm) -- (#1 mm,0 mm) -- (#1 mm,#2 mm) -- (0 mm,#2 mm) -- (0 mm,0 mm);
+		
+		\foreach \x in {0,10,...,#1}{ \draw[canline] (\x mm,0 mm) -- (\x mm,#2 mm); }
+		\foreach \y in {0,10,...,#2}{ \draw[canline] (0 mm,\y mm) -- (#1 mm,\y mm); }
+		\foreach \x in {0,5,...,#1}{ \draw[hcanline] (\x mm,0 mm) -- (\x mm,#2 mm); }
+		\foreach \y in {0,5,...,#2}{ \draw[hcanline] (0 mm,\y mm) -- (#1 mm,\y mm); }
+		\foreach \x in {0,1,...,#1}{ \draw[milline] (\x mm,0 mm) -- (\x mm,#2 mm); }
+		\foreach \y in {0,1,...,#2}{ \draw[milline] (0 mm,\y mm) -- (#1 mm,\y mm); }
+	\end{tikzpicture}%
+}

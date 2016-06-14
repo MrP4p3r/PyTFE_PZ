@@ -1,0 +1,202 @@
+% -- LuaLaTeX --
+
+\RequirePackage{calc}
+
+% -- VARS --
+
+%\faculty
+%\department
+%\speciality
+%\zavkafname
+%\zavkafrank
+%\docsubject
+%\studclass
+%\studname
+%\rukovname
+%\rukovrank
+
+\newcommand{\faculty}[1]{\gdef\@faculty{#1}}
+\newcommand{\department}[1]{\gdef\@department{#1}}
+\newcommand{\speciality}[1]{\gdef\@speciality{#1}}
+\newcommand{\zavkafname}[1]{\gdef\@zavkafname{#1}}
+\newcommand{\zavkafrank}[1]{\gdef\@zavkafrank{#1}}
+\newcommand{\docsubject}[1]{\gdef\@docsubject{#1}}
+\newcommand{\studclass}[1]{\gdef\@studclass{#1}}
+\newcommand{\studname}[1]{\gdef\@studname{#1}}
+\newcommand{\rukovname}[1]{\gdef\@rukovname{#1}}
+\newcommand{\rukovrank}[1]{\gdef\@rukovrank{#1}}
+\newcommand{\docfooter}[1]{\gdef\@docfooter{#1}}
+
+\newcommand{\gender}[1]{\gdef\@gender{#1}}
+
+\faculty{\char`\\faculty}
+\department{\char`\\department}
+\speciality{\char`\\speciality}
+\zavkafname{\mbox{}}
+\zavkafrank{\mbox{}}
+\docsubject{\char`\\docsubject}
+\studclass{\char`\\studclass}
+\studname{\char`\\studname}
+\rukovname{\mbox{}}
+\rukovrank{\mbox{}}
+\docfooter{\the\year}
+
+\gender{m} % m/f
+
+%--------------------- TITLE PAGE ------------------------
+
+\newlength{\q@block@width}
+\newlength{\q@block@top}
+\newlength{\q@block@left}
+
+\newlength{\q@ul@rw}
+\newlength{\q@ul@th}
+\newlength{\q@ul@bh}
+
+%\setlength{\q@ul@rw}{0.925\textwidth}
+\setlength{\q@ul@th}{-5.1mm}
+\setlength{\q@ul@bh}{-1.5mm}
+
+\newcommand{\q@ul}[2]{%
+  \setlength{\q@ul@rw}{\textwidth}
+  \noindent\centering
+  \ifseq{#1}{}{\phantom{DA}}{#1} \\
+  \vspace{\q@ul@th}\rule{\q@ul@rw}{0.5pt}
+  \ifseq{#2}{}{}{\\\vspace{\q@ul@bh} \footnotesize #2}
+}
+
+\newenvironment{q@block}[2]
+{
+  \setlength{\q@block@width}{#1}
+  \setlength{\q@block@top}{\Gm@tmargin+#2}
+  \setlength{\q@block@left}{\Gm@lmargin+(\Gm@width-\q@block@width)/2}
+  \begin{textblock*}{\q@block@width}(\q@block@left,\q@block@top)
+}{
+  \end{textblock*}
+}
+
+\newcommand{\makeqdiptitle}{%
+  \begin{titlepage}
+    \mbox{}
+
+    \begin{q@block}{150mm}{0mm}
+      \centering\footnotesize\noindent
+      МИНИСТЕРСТВО ОБРАЗОВАНИЯ И НАУКИ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+      федеральное государственное автономное образовательное учреждение\\
+      высшего образования\\
+      <<САНКТ-ПЕТЕРБУРГСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ\\
+      АЭРОКОСМИЧЕСКОГО ПРИБОРОСТРОЕНИЯ>>
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{35mm}
+      \noindent
+      \@faculty \\
+      Специальность (направление) \makebox[0mm][l]{\@speciality{}} \hspace{25mm}
+      Кафедра \makebox[0mm][l]{\@department{}}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{52.5mm}
+      \noindent
+      К ЗАЩИТЕ ДОПУСТИТЬ\\
+      Зав. кафедрой \\
+      \noindent
+      \begin{minipage}[t]{\linewidth}
+        \noindent
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@zavkafrank}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@zavkafname}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{0.8\linewidth}{90mm}
+      \centering\noindent
+      ПОЯСНИТЕЛЬНАЯ ЗАПИСКА\\
+      к дипломной работе на тему\\
+      \begin{minipage}[t][25mm][c]{150mm}
+        \noindent\centering\@docsubject
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{145mm}
+      \noindent
+      Дипломную работу \ifseq{\@gender}{m}{выполнил}{выполнила} \\
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.2\linewidth}
+          \ifseq{\@gender}{m}{студент}{студентка} группы \textnumero
+        \end{minipage}
+        \begin{minipage}[t]{0.18\linewidth}
+          \q@ul{\@studclass}{}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.28\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.28\linewidth}
+          \q@ul{\@studname}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{165mm}
+      \noindent
+      Руководитель дипломной работы \\
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@rukovrank}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{\@rukovname}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{190mm}
+      \noindent Консультанты
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{200mm}
+      \noindent
+      -- по вопросам экономики и организации производства \\
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \begin{q@block}{\linewidth}{220mm}
+      \noindent
+      -- по вопросам охраны труда и окружающей среды \\
+      \begin{minipage}[t]{\linewidth}
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{должность, уч. степень, звание}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{подпись, дата}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{0.31\linewidth}
+          \q@ul{}{инициалы, фамилия}
+        \end{minipage}
+      \end{minipage}
+    \end{q@block}
+
+    \noindent
+    \begin{center}
+    \vfill \@docfooter
+    \end{center}
+  \end{titlepage}
+}
